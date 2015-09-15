@@ -38,6 +38,7 @@ main = runTest do
         liftEff $ either (const $ done true) (const $ done false) result
 
   test "When the timeout will elapse before any attempts to run the Aff are successful" do
+
     assertFn "The returned Aff should fail" \done ->
       launchAff $ do
         seq <- makeVar' $ failAffsForDurationAndNumberOfAttempts 1000 10
@@ -51,7 +52,7 @@ main = runTest do
         result <- attempt $ reattempt 10000 (later' 1000 $ pure unit)
         liftEff $ either (const $ done false) (const $ done true) result
 
-  test "When the Aff will succeed during an attempt started before the timeout has elapsed" do
+  test "When the Aff will succeed during an attempt started before the timeout will elapse" do
 
     assertFn "The returned Aff should be successful" \done ->
       launchAff $ do
@@ -68,7 +69,5 @@ main = runTest do
         liftEff $ done result
 
   -- TODO: Test that process finishes when attempt is successful.
-  --       When later' is not cancelled then process continues until later' succeeds
-  --       even after the Aff returned by reattempt succeeds.
 
-  -- TODO: Test that the returned Aff only succeeds once
+  -- TODO: Test that the returned Aff only succeeds once.
