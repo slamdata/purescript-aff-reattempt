@@ -1,0 +1,31 @@
+{
+  "name": "purescript-aff-timeout",
+  "repository": {
+      "type": "git",
+      "url": "git://github.com/slamdata/purescript-aff-reattempt.git"
+  },
+  "license": "MIT",
+  "authors": [
+    "Becky Conning <becky.conning@icloud.com>",
+    "Gary Burgess <gary.burgess@gmail.com>"
+  ],
+  "version": "0.1.0",
+  "moduleType": [
+    "node"
+  ],
+  "ignore": [
+    "**/.*",
+    "bower_components",
+    "node_modules",
+    "output",
+    "test",
+    "bower.json"
+  ],
+  "dependencies": {
+    "purescript-aff": "^0.11.3",
+    "purescript-refs": "~0.2.0"
+  },
+  "devDependencies": {
+    "purescript-test-unit": "~2.0.0"
+  }
+}
