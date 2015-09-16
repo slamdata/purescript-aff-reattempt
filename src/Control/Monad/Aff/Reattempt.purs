@@ -8,15 +8,16 @@ import Control.Monad.Eff.Class (liftEff)
 import Control.Monad.Error.Class (catchError, throwError)
 import Control.Monad.Eff.Exception (Error(), error)
 
--- | `reattempt` repeatedly attempts to run the provided `Aff` until either it succeeds
--- | or the provided timeout elapses.
+-- | `reattempt` repeatedly attempts to run the provided `Aff` until either an attempt
+-- | succeeds or the provided timeout elapses.
 -- |
 -- | After the timeout elapses no more attempts will be made but the last attempt will
 -- | not be cancelled. Each attempt either fails or succeeds. The timeout has no effect on
 -- | the outcome of an attempt.
 -- |
--- | When an attempt to run the provided `Aff` succeeds `reattempt` returns that
--- | successful `Aff`. When no attempts succeed `reattempt` returns the last failed `Aff`.
+-- | When an attempt to run the provided `Aff` succeeds the `Aff` returned by `reattempt`
+-- | will succeed. When no attempts succeed the `Aff` returned by `reattempt` will fail
+-- | with the `Error` raised by the last attempt.
 reattempt :: forall e a. Int -> Aff (ref :: REF | e) a -> Aff (ref :: REF | e) a
 reattempt ms aff = do
   elapsed <- liftEff $ newRef false
