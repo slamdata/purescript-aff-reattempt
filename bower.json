@@ -1,8 +1,8 @@
 {
   "name": "purescript-aff-timeout",
   "repository": {
-      "type": "git",
-      "url": "git://github.com/slamdata/purescript-aff-reattempt.git"
+    "type": "git",
+    "url": "git://github.com/slamdata/purescript-aff-reattempt.git"
   },
   "license": "MIT",
   "authors": [
@@ -22,10 +22,10 @@
     "bower.json"
   ],
   "dependencies": {
-    "purescript-aff": "^0.11.3",
-    "purescript-refs": "~0.2.0"
+    "purescript-aff": "^0.13.0",
+    "purescript-refs": "^0.2.0"
   },
   "devDependencies": {
-    "purescript-test-unit": "~2.0.0"
+    "purescript-test-unit": "^2.0.1"
   }
 }
