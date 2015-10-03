@@ -1,5 +1,5 @@
 {
-  "name": "purescript-aff-timeout",
+  "name": "purescript-aff-reattempt",
   "repository": {
     "type": "git",
     "url": "git://github.com/slamdata/purescript-aff-reattempt.git"
