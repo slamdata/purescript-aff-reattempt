@@ -4,7 +4,7 @@
     "type": "git",
     "url": "git://github.com/slamdata/purescript-aff-reattempt.git"
   },
-  "license": "MIT",
+  "license": "Apache-2.0",
   "authors": [
     "Becky Conning <becky.conning@icloud.com>",
     "Gary Burgess <gary.burgess@gmail.com>"
