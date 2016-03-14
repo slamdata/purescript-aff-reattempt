@@ -22,7 +22,7 @@
     "bower.json"
   ],
   "dependencies": {
-    "purescript-aff": "^0.13.0",
+    "purescript-aff": "^0.16.0",
     "purescript-refs": "^0.2.0"
   },
   "devDependencies": {

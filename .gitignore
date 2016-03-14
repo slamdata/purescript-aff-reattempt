@@ -1,7 +1,6 @@
-.*
-!.gitignore
-!.travis.yml
+/.*
+!/.gitignore
+!/.travis.yml
 /bower_components/
 /node_modules/
 /output/
-/src/.webpack.js
