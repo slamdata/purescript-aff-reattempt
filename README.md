@@ -1,17 +1,17 @@
 # purescript-aff-reattempt
 
+[![Latest release](http://img.shields.io/bower/v/purescript-aff-reattempt.svg)](https://github.com/slamdata/purescript-aff-reattempt/releases)
+[![Build Status](https://travis-ci.org/slamdata/purescript-aff-reattempt.svg?branch=master)](https://travis-ci.org/slamdata/purescript-aff-reattempt)
+[![Dependency Status](https://www.versioneye.com/user/projects/56e6d48d96f80c002c8ceb4f/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56e6d48d96f80c002c8ceb4f)
+
 A PureScript library for reattempting asynchronous computations.
 
-### Module documentation
+## Installation
 
-* [Control.Monad.Aff.Reattempt](docs/Control/Monad/Aff/Reattempt.md)
+``` purescript
+bower install purescript-aff-reattempt
+```
 
-### Installation
+## Documentation
 
-Please install [Bower](https://github.com/bower/bower) and run `bower install
-purescript-aff-reattempt`.
-
-### Tests
-
-Please install [Pulp](https://github.com/bodil/pulp) and run `pulp test`.
-
+Module documentation is [published on Pursuit](http://pursuit.purescript.org/packages/purescript-aff-reattempt).
