@@ -22,9 +22,6 @@ import Test.Unit.Main (runTest)
 
 import Control.Monad.Aff.Reattempt (reattempt)
 
-ignore :: forall m a. Monad m => m a -> m Unit
-ignore m = m >>= (\_ -> pure unit)
-
 failAffsForDurationAndNumberOfAttempts :: forall e. Int -> Int -> Array (Aff e Unit)
 failAffsForDurationAndNumberOfAttempts timeout attemptCount = seq
   where
