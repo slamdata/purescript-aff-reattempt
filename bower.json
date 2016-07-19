@@ -1,25 +1,18 @@
 {
   "name": "purescript-aff-reattempt",
+  "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git://github.com/slamdata/purescript-aff-reattempt.git"
   },
-  "license": "Apache-2.0",
-  "authors": [
-    "Becky Conning <becky.conning@icloud.com>",
-    "Gary Burgess <gary.burgess@gmail.com>"
-  ],
-  "version": "0.1.0",
-  "moduleType": [
-    "node"
-  ],
   "ignore": [
     "**/.*",
     "bower_components",
     "node_modules",
     "output",
     "test",
-    "bower.json"
+    "bower.json",
+    "package.json"
   ],
   "dependencies": {
     "purescript-aff": "^1.0.0",
