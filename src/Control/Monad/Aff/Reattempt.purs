@@ -18,16 +18,16 @@ import Control.Monad.Eff.Exception (Error(), error)
 -- | When an attempt to run the provided `Aff` succeeds the `Aff` returned by `reattempt`
 -- | will succeed. When no attempts succeed the `Aff` returned by `reattempt` will fail
 -- | with the `Error` raised by the last attempt.
-reattempt :: forall e a. Int -> Aff (ref :: REF | e) a -> Aff (ref :: REF | e) a
+reattempt ∷ ∀ e a. Int → Aff (ref ∷ REF | e) a → Aff (ref ∷ REF | e) a
 reattempt ms aff = do
-  elapsed <- liftEff $ newRef false
-  forkedTimeout <- forkAff (later' ms $ liftEff $ writeRef elapsed true)
-  let attempt = aff `catchError` \error -> do
-        shouldRethrow <- liftEff $ readRef elapsed
+  elapsed ← liftEff $ newRef false
+  forkedTimeout ← forkAff (later' ms $ liftEff $ writeRef elapsed true)
+  let attempt = aff `catchError` \error → do
+        shouldRethrow ← liftEff $ readRef elapsed
         if shouldRethrow
-          then throwError (error :: Error)
+          then throwError (error ∷ Error)
           else attempt
-  result <- attempt
+  result ← attempt
   -- Process continues after returned aff succeeds if forked timeout isn't cancelled
   cancel forkedTimeout (error "")
   pure result
