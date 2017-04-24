@@ -2,11 +2,12 @@ module Control.Monad.Aff.Reattempt where
 
 import Prelude
 
-import Control.Monad.Aff (Aff(), forkAff, later', cancel)
-import Control.Monad.Eff.Ref (newRef, readRef, writeRef, REF())
+import Control.Monad.Aff (Aff, forkAff, delay, cancel)
+import Control.Monad.Eff.Ref (newRef, readRef, writeRef, REF)
 import Control.Monad.Eff.Class (liftEff)
 import Control.Monad.Error.Class (catchError, throwError)
-import Control.Monad.Eff.Exception (Error(), error)
+import Control.Monad.Eff.Exception (Error, error)
+import Data.Time.Duration (Milliseconds)
 
 -- | `reattempt` repeatedly attempts to run the provided `Aff` until either an attempt
 -- | succeeds or the provided timeout elapses.
@@ -18,10 +19,12 @@ import Control.Monad.Eff.Exception (Error(), error)
 -- | When an attempt to run the provided `Aff` succeeds the `Aff` returned by `reattempt`
 -- | will succeed. When no attempts succeed the `Aff` returned by `reattempt` will fail
 -- | with the `Error` raised by the last attempt.
-reattempt ∷ ∀ e a. Int → Aff (ref ∷ REF | e) a → Aff (ref ∷ REF | e) a
+reattempt ∷ ∀ e a. Milliseconds → Aff (ref ∷ REF | e) a → Aff (ref ∷ REF | e) a
 reattempt ms aff = do
   elapsed ← liftEff $ newRef false
-  forkedTimeout ← forkAff (later' ms $ liftEff $ writeRef elapsed true)
+  forkedTimeout ← forkAff do
+    delay ms
+    liftEff $ writeRef elapsed true
   let attempt = aff `catchError` \error → do
         shouldRethrow ← liftEff $ readRef elapsed
         if shouldRethrow
@@ -29,5 +32,5 @@ reattempt ms aff = do
           else attempt
   result ← attempt
   -- Process continues after returned aff succeeds if forked timeout isn't cancelled
-  cancel forkedTimeout (error "")
+  _ ← cancel forkedTimeout (error "")
   pure result
