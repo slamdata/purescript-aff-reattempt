@@ -22,11 +22,11 @@
     "bower.json"
   ],
   "dependencies": {
-    "purescript-aff": "^1.0.0",
-    "purescript-refs": "^1.0.0"
+    "purescript-aff": "^3.0.0",
+    "purescript-refs": "^3.0.0"
   },
   "devDependencies": {
-    "purescript-test-unit": "^7.0.0",
-    "purescript-parallel": "^1.0.0"
+    "purescript-test-unit": "^11.0.0",
+    "purescript-parallel": "^3.0.0"
   }
 }
