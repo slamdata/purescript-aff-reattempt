@@ -2,9 +2,8 @@ module Control.Monad.Aff.Reattempt where
 
 import Prelude
 
-import Control.Monad.Aff (Aff, delay, forkAff, killFiber)
+import Control.Monad.Aff (Aff, delay, forkAff, supervise)
 import Control.Monad.Eff.Class (liftEff)
-import Control.Monad.Eff.Exception (Error, error)
 import Control.Monad.Eff.Ref (newRef, readRef, writeRef, REF)
 import Control.Monad.Error.Class (catchError, throwError)
 import Data.Time.Duration (Milliseconds)
@@ -20,17 +19,14 @@ import Data.Time.Duration (Milliseconds)
 -- | will succeed. When no attempts succeed the `Aff` returned by `reattempt` will fail
 -- | with the `Error` raised by the last attempt.
 reattempt ∷ ∀ e a. Milliseconds → Aff (ref ∷ REF | e) a → Aff (ref ∷ REF | e) a
-reattempt ms aff = do
+reattempt ms aff = supervise do
   elapsed ← liftEff $ newRef false
-  forkedTimeout ← forkAff do
+  _ ← forkAff do
     delay ms
     liftEff $ writeRef elapsed true
   let attempt = aff `catchError` \error → do
         shouldRethrow ← liftEff $ readRef elapsed
         if shouldRethrow
-          then throwError (error ∷ Error)
+          then throwError error
           else attempt
-  result ← attempt
-  -- Process continues after returned aff succeeds if forked timeout isn't cancelled
-  _ ← killFiber (error "") forkedTimeout
-  pure result
+  attempt
