@@ -15,11 +15,11 @@
     "package.json"
   ],
   "dependencies": {
-    "purescript-aff": "^3.0.0",
+    "purescript-aff": "^4.0.2",
     "purescript-refs": "^3.0.0"
   },
   "devDependencies": {
-    "purescript-test-unit": "^11.0.0",
-    "purescript-parallel": "^3.0.0"
+    "purescript-test-unit": "^13.0.0",
+    "purescript-parallel": "^3.3.1"
   }
 }

@@ -2,11 +2,11 @@ module Control.Monad.Aff.Reattempt where
 
 import Prelude
 
-import Control.Monad.Aff (Aff, forkAff, delay, cancel)
-import Control.Monad.Eff.Ref (newRef, readRef, writeRef, REF)
+import Control.Monad.Aff (Aff, delay, forkAff, killFiber)
 import Control.Monad.Eff.Class (liftEff)
-import Control.Monad.Error.Class (catchError, throwError)
 import Control.Monad.Eff.Exception (Error, error)
+import Control.Monad.Eff.Ref (newRef, readRef, writeRef, REF)
+import Control.Monad.Error.Class (catchError, throwError)
 import Data.Time.Duration (Milliseconds)
 
 -- | `reattempt` repeatedly attempts to run the provided `Aff` until either an attempt
@@ -32,5 +32,5 @@ reattempt ms aff = do
           else attempt
   result ← attempt
   -- Process continues after returned aff succeeds if forked timeout isn't cancelled
-  _ ← cancel forkedTimeout (error "")
+  _ ← killFiber (error "") forkedTimeout
   pure result
