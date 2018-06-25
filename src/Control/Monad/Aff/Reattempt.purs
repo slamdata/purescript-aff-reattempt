@@ -2,9 +2,9 @@ module Control.Monad.Aff.Reattempt where
 
 import Prelude
 
-import Control.Monad.Aff (Aff, delay, forkAff, supervise)
-import Control.Monad.Eff.Class (liftEff)
-import Control.Monad.Eff.Ref (newRef, readRef, writeRef, REF)
+import Effect.Aff (Aff, delay, forkAff, supervise)
+import Effect.Class (liftEffect)
+import Effect.Ref (new, read, write)
 import Control.Monad.Error.Class (catchError, throwError)
 import Data.Time.Duration (Milliseconds)
 
@@ -18,14 +18,14 @@ import Data.Time.Duration (Milliseconds)
 -- | When an attempt to run the provided `Aff` succeeds the `Aff` returned by `reattempt`
 -- | will succeed. When no attempts succeed the `Aff` returned by `reattempt` will fail
 -- | with the `Error` raised by the last attempt.
-reattempt ∷ ∀ e a. Milliseconds → Aff (ref ∷ REF | e) a → Aff (ref ∷ REF | e) a
+reattempt ∷ ∀ a. Milliseconds → Aff a → Aff a
 reattempt ms aff = supervise do
-  elapsed ← liftEff $ newRef false
+  elapsed ← liftEffect $ new false
   _ ← forkAff do
     delay ms
-    liftEff $ writeRef elapsed true
+    liftEffect $ write true elapsed
   let attempt = aff `catchError` \error → do
-        shouldRethrow ← liftEff $ readRef elapsed
+        shouldRethrow ← liftEffect $ read elapsed
         if shouldRethrow
           then throwError error
           else attempt
