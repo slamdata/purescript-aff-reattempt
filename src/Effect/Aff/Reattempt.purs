@@ -1,4 +1,4 @@
-module Control.Monad.Aff.Reattempt where
+module Effect.Aff.Reattempt where
 
 import Prelude
 
